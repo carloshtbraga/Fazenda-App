@@ -34,6 +34,11 @@ urlpatterns = [
         "pedidos/<int:pedido_id>/deletar/", views.deletar_pedido, name="deletar_pedido"
     ),
     path(
+        "pedido/<int:pedido_id>/concluir/",
+        views.marcar_pedido_como_concluido,
+        name="concluir_pedido",
+    ),
+    path(
         "detalhes_item_pedido/<int:pk>/",
         views.detalhes_item_pedido,
         name="detalhes_item_pedido",
