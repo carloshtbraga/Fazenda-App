@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
-from .models import Cliente
-from .forms import ClienteForm
+from .models import Cliente, Produto
+from .forms import ClienteForm, ProdutoForm
 
 
 # Create your views here.
@@ -22,3 +22,19 @@ def criar_cliente(request):
     else:
         form = ClienteForm()
     return render(request, "criar_cliente.html", {"form": form})
+
+
+def listar_produtos(request):
+    produtos = Produto.objects.all()
+    return render(request, "listar_produtos.html", {"produtos": produtos})
+
+
+def criar_produto(request):
+    if request.method == "POST":
+        form = ProdutoForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("listar_produtos")
+    else:
+        form = ProdutoForm()
+    return render(request, "criar_produto.html", {"form": form})

@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Listagem de Produtos</title>
+</head>
+<body>
+    <h1>Listagem de Produtos</h1>
+    <ul>
+    {% for produto in produtos %}
+        <li>{{ produto.nome }} - Tempo de Preparo: {{ produto.tempo_preparo }} minutos</li>
+    {% endfor %}
+    </ul>
+    <a href="{% url 'criar_produto' %}">Novo Produto</a>
+</body>
+</html>
