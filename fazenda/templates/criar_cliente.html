@@ -1,12 +1,8 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Cadastrar Novo Cliente</title>
-</head>
-<body>
-<a href="{% url 'listar_clientes' %}">Clientes</a>
-<a href="{% url 'listar_produtos' %}">Produtos</a>
-<a href="{% url 'listar_pedidos' %}">Pedidos</a>
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Cadastrar Cliente{% endblock %}
+{% block content %}
+<div>
     <h1>Cadastrar Novo Cliente</h1>
     <form method="post">
         {% csrf_token %}
@@ -14,5 +10,5 @@
         <button type="submit">Salvar</button>
     </form>
     <a href="{% url 'listar_clientes' %}">Voltar para a listagem</a>
-</body>
-</html>
+</div>
+{% endblock %}

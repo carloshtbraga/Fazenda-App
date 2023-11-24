@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title></title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <title>
+    {% block title %}{% endblock %}
+  </title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+    </style>
+</head>
+
+<body class="d-flex flex-column align-items-center d-sm bg-light text-dark">
+  <header class="nav bg-dark rounded mt-2 mb-2 w-100">
+    <a class="nav-link text-light" href="{% url 'listar_clientes' %}">Clientes</a>
+    <a class="nav-link text-light" href="{% url 'listar_produtos' %}">Produtos</a>
+    <a class="nav-link text-light" href="{% url 'listar_pedidos' %}">Pedidos</a>
+  </header>
+  {% block content %}{% endblock %}
+</body>
+
+</html>
