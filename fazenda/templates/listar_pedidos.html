@@ -8,14 +8,19 @@
     <a href="{% url 'listar_produtos' %}">Produtos</a>
     <a href="{% url 'listar_pedidos' %}">Pedidos</a>
     <h1>Listagem de Pedidos</h1>
+    <a href="{% url 'criar_pedido' %}">Novo Pedido</a>
+    <br>    <br>
+
+    Total Pedidos: {{ pedidos|length }}
+    
     <ul>
         {% for pedido in pedidos %}
-            <li>
-                <a href="{% url 'detalhes_item_pedido' pedido.id %}"> <h3>Pedido de {{ pedido.cliente.nome }} em {{ pedido.data_pedido }}</h3></a>
+ 
+                <a href="{% url 'detalhes_item_pedido' pedido.id %}"> <h3>Pedido {{ pedido.pk }} - {{ pedido.cliente.nome }} - {{ pedido.data_pedido }}</h3></a>
+          
 
-            </li>
+
         {% endfor %}
     </ul>
-    <a href="{% url 'criar_pedido' %}">Novo Pedido</a>
 </body>
 </html>

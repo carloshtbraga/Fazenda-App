@@ -10,7 +10,11 @@
     <h1>Listagem de Produtos</h1>
     <ul>
     {% for produto in produtos %}
-        <li>{{ produto.nome }} - Tempo de Preparo: {{ produto.tempo_preparo }} dias</li>
+        <li>
+            {{ produto.nome }} - Tempo de Preparo: {{ produto.tempo_preparo }} dias
+            <a href="{% url 'atualizar_produto' produto.pk %}">Atualizar</a>
+            <a href="{% url 'deletar_produto' produto.pk %}">Deletar</a>
+        </li>
     {% endfor %}
     </ul>
     <a href="{% url 'criar_produto' %}">Novo Produto</a>

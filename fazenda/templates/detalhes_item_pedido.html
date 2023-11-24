@@ -4,7 +4,7 @@
     <title>Detalhes do Item de Pedido</title>
 </head>
 <body>
-    <h3>Pedido de {{ pedido.cliente.nome }} em {{ pedido.data_pedido }}</h3>
+    <h3>Pedido de {{ pedido.cliente.nome }} em {{ pedido.data_pedido }} Status : {{pedido.status}}</h3>
     <ul>
         {% for item_pedido in pedido.itempedido_set.all %}
             <li>
@@ -15,5 +15,7 @@
     <p>
         <strong>Total do Pedido: R$ {{ pedido.total_pedido }}</strong>
     </p>
+    <a href="{% url 'adicionar_item_pedido' pedido.id %}">Adicionar Item</a>
+    <a href="{% url 'deletar_pedido' pedido.id %}">Deletar Pedido</a>
 </body>
 </html>

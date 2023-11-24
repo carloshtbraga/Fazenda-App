@@ -25,6 +25,28 @@ def criar_cliente(request):
     return render(request, "criar_cliente.html", {"form": form})
 
 
+def atualizar_cliente(request, pk):
+    cliente = get_object_or_404(Cliente, pk=pk)
+    if request.method == "POST":
+        form = ClienteForm(request.POST, instance=cliente)
+        if form.is_valid():
+            form.save()
+            return redirect("listar_clientes")
+    else:
+        form = ClienteForm(instance=cliente)
+
+    return render(request, "atualizar_cliente.html", {"form": form})
+
+
+def deletar_cliente(request, pk):
+    cliente = get_object_or_404(Cliente, pk=pk)
+    if request.method == "POST":
+        cliente.delete()
+        return redirect("listar_clientes")
+
+    return render(request, "deletar_cliente.html", {"cliente": cliente})
+
+
 def listar_produtos(request):
     produtos = Produto.objects.all()  # type: ignore
     return render(request, "listar_produtos.html", {"produtos": produtos})
@@ -39,6 +61,28 @@ def criar_produto(request):
     else:
         form = ProdutoForm()
     return render(request, "criar_produto.html", {"form": form})
+
+
+def atualizar_produto(request, produto_id):
+    produto = get_object_or_404(Produto, pk=produto_id)
+    if request.method == "POST":
+        form = ProdutoForm(request.POST, instance=produto)
+        if form.is_valid():
+            form.save()
+            return redirect("listar_produtos")
+    else:
+        form = ProdutoForm(instance=produto)
+    return render(request, "atualizar_produto.html", {"form": form, "produto": produto})
+
+
+def deletar_produto(request, produto_id):
+    produto = get_object_or_404(Produto, pk=produto_id)
+
+    if request.method == "POST":
+        produto.delete()
+        return redirect("listar_produtos")
+
+    return render(request, "deletar_produto.html", {"produto": produto})
 
 
 def listar_pedidos(request):
@@ -62,6 +106,14 @@ def criar_pedido(request):
     return render(request, "criar_pedido.html", {"form": form})
 
 
+def deletar_pedido(request, pedido_id):
+    pedido = get_object_or_404(Pedido, pk=pedido_id)
+    if request.method == "POST":
+        pedido.delete()
+        return redirect('listar_pedidos')
+    return render(request, "deletar_pedido.html", {"pedido": pedido})
+
+
 def detalhes_item_pedido(request, pk):
     pedido = get_object_or_404(Pedido, pk=pk)
     pedido.total_pedido = (
@@ -83,7 +135,7 @@ def adicionar_item_pedido(request, pedido_id):
             item_pedido = form.save(commit=False)
             item_pedido.pedido = pedido
             item_pedido.save()
-            return redirect("listar_pedidos")
+            return redirect("detalhes_item_pedido", pk=pedido_id)
     else:
         form = ItemPedidoForm()
 

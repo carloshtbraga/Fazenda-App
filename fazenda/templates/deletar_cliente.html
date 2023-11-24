@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Deletar Cliente</title>
+</head>
+<body>
+    <h1>Deletar Cliente</h1>
+    <p>Você tem certeza que deseja deletar o cliente {{ cliente.nome }}?</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Confirmar Deleção</button>
+    </form>
+</body>
+</html>
