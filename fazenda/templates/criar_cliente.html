@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cadastrar Novo Cliente</title>
+</head>
+<body>
+    <h1>Cadastrar Novo Cliente</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Salvar</button>
+    </form>
+    <a href="{% url 'listar_clientes' %}">Voltar para a listagem</a>
+</body>
+</html>
