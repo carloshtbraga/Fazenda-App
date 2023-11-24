@@ -12,11 +12,11 @@
             </li>
         {% endfor %}
     </ul>
-    <a href="{% url 'concluir_pedido' pedido.id %}">Concluir Pedido</a>
+    <a href="{% url 'concluir_pedido' pedido.id %}" class="btn btn-success">Concluir Pedido</a>
     <p>
         <strong>Total do Pedido: R$ {{ pedido.total_pedido }}</strong>
     </p>
-    <a href="{% url 'adicionar_item_pedido' pedido.id %}">Adicionar Item</a>
-    <a href="{% url 'deletar_pedido' pedido.id %}">Deletar Pedido</a>
+    <a href="{% url 'adicionar_item_pedido' pedido.id %}" class="btn btn-primary">Adicionar Item</a>
+    <a href="{% url 'deletar_pedido' pedido.id %}" class="btn btn-danger">Deletar Pedido</a>
 </body>
 </html>

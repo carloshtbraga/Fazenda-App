@@ -9,8 +9,8 @@
     {% for cliente in clientes %}
         <li>
             {{ cliente.nome }} - {{ cliente.empresa }} - {{ cliente.telefone }}
-            <a href="{% url 'atualizar_cliente' cliente.pk %}">Atualizar</a>
-            <a href="{% url 'deletar_cliente' cliente.pk %}">Deletar</a>
+            <a href="{% url 'atualizar_cliente' cliente.pk %}"><i class="bi bi-pencil-square"></i></a>
+            <a href="{% url 'deletar_cliente' cliente.pk %}"><i class="bi bi-trash3-fill"></i></a>
         </li>
     {% endfor %}
   </ul>

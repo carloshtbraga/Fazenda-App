@@ -8,7 +8,7 @@
     <p>Você tem certeza que deseja deletar o pedido de {{ pedido.cliente.nome }}?</p>
     <form action="{% url 'deletar_pedido' pedido.pk %}" method="post">
         {% csrf_token %}
-        <button type="submit">Confirmar Deleção</button>
+        <button type="submit" class="btn btn-danger">Confirmar Deleção</button>
     </form>
     <a href="{% url 'listar_pedidos' %}">Cancelar e voltar para a listagem</a>
 </body>
