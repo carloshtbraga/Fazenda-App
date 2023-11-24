@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Deletar Produto</title>
+</head>
+<body>
+    <h1>Deletar Produto</h1>
+    <p>Tem certeza que deseja deletar o produto "{{ produto.nome }}"?</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Deletar Produto</button>
+        <a href="{% url 'listar_produtos' %}">Cancelar e voltar para a listagem</a>
+    </form>
+</body>
+</html>

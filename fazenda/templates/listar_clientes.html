@@ -1,11 +1,17 @@
-{% extends 'base.html' %}
-{% block title %}Listagem de Clientes{% endblock %}
-{% block content %}
-<div>
-  <h1>Listagem de Clientes</h1>
-  <ul>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Listagem de Clientes</title>
+</head>
+<body>
+    <h1>Listagem de Clientes</h1>
+    <ul>
     {% for cliente in clientes %}
-    <li>{{ cliente.nome }} - {{ cliente.empresa }} - {{ cliente.telefone }}</li>
+        <li>
+            {{ cliente.nome }} - {{ cliente.empresa }} - {{ cliente.telefone }}
+            <a href="{% url 'atualizar_cliente' cliente.pk %}">Atualizar</a>
+            <a href="{% url 'deletar_cliente' cliente.pk %}">Deletar</a>
+        </li>
     {% endfor %}
   </ul>
   <a href="{% url 'criar_cliente' %}">Novo Cliente</a>

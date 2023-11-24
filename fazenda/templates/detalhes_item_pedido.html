@@ -1,19 +1,21 @@
-{% extends 'base.html' %}
-
-{% block title %}Detalhes do Pedido{% endblock %}
-{% block content %}
-
-<div>
-  <h3>Pedido de {{ pedido.cliente.nome }} em {{ pedido.data_pedido }}</h3>
-  <ul>
-    {% for item_pedido in pedido.itempedido_set.all %}
-    <li>
-      Produto: {{ item_pedido.produto.nome }} - Quantidade: {{ item_pedido.quantidade }} - Preço: {{ item_pedido.preco
-      }}
-    </li>
-    {% endfor %}
-  </ul>
-  <p>
-    <strong>Total do Pedido: R$ {{ pedido.total_pedido }}</strong>
-  </p>
-</div>{% endblock %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Detalhes do Item de Pedido</title>
+</head>
+<body>
+    <h3>Pedido de {{ pedido.cliente.nome }} em {{ pedido.data_pedido }} Status : {{pedido.status}}</h3>
+    <ul>
+        {% for item_pedido in pedido.itempedido_set.all %}
+            <li>
+                Produto: {{ item_pedido.produto.nome }} - Quantidade: {{ item_pedido.quantidade }} - Preço: {{ item_pedido.preco }}
+            </li>
+        {% endfor %}
+    </ul>
+    <p>
+        <strong>Total do Pedido: R$ {{ pedido.total_pedido }}</strong>
+    </p>
+    <a href="{% url 'adicionar_item_pedido' pedido.id %}">Adicionar Item</a>
+    <a href="{% url 'deletar_pedido' pedido.id %}">Deletar Pedido</a>
+</body>
+</html>

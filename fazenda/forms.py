@@ -18,7 +18,7 @@ class ProdutoForm(ModelForm):
 class PedidoForm(ModelForm):
     class Meta:
         model = Pedido
-        exclude = ["produtos"]
+        exclude = ["produtos", "status"]
 
 
 class ItemPedidoForm(ModelForm):

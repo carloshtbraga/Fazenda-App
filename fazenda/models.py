@@ -22,6 +22,14 @@ class Pedido(models.Model):
     cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
     produtos = models.ManyToManyField(Produto, through="ItemPedido")
     data_pedido = models.DateField(auto_now_add=True)
+    status = models.CharField(
+        max_length=10,
+        choices=(
+            ("Pendente", "Pendente"),
+            ("Concluído", "Concluído"),
+        ),
+        default="Pendente",
+    )
 
     def __str__(self):
         itens = ', '.join([f"{item.quantidade}x {item.produto.nome} por R$ {item.preco}" for item in self.itempedido_set.all()])
