@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Detalhes do Item de Pedido</title>
+</head>
+
+<body>
+  <h1>Detalhes do Item de Pedido</h1>
+  <ul>
+    {% for item_pedido in pedido %}
+    <li>
+      Produto: {{ item_pedido.produto.nome }} - Quantidade: {{ item_pedido.quantidade }} - Preço: {{ item_pedido.preco
+      }}
+      <!-- <a href="{% url 'detalhes_item_pedido' item_pedido.id %}">Detalhes do Pedido</a> -->
+    </li>
+    {% endfor %}
+  </ul>
+</body>
+
+</html>

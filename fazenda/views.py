@@ -81,3 +81,8 @@ def adicionar_item_pedido(request, pedido_id):
         form = ItemPedidoForm()
 
     return render(request, "adicionar_item_pedido.html", {"form": form})
+
+
+def pedido(request, pk):
+    pedido = get_object_or_404(Pedido, pk=pk)
+    return render(request, "pedido.html", {"pedido": pedido})

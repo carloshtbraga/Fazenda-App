@@ -1,22 +1,17 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Listagem de Pedidos</title>
-</head>
-<body>
-    <a href="{% url 'listar_clientes' %}">Clientes</a>
-    <a href="{% url 'listar_produtos' %}">Produtos</a>
-    <a href="{% url 'listar_pedidos' %}">Pedidos</a>
+{% extends 'base.html' %}
+{% block title %}Listagem de Pedidos{% endblock %}
+{% block content %}
+<div>
     <h1>Listagem de Pedidos</h1>
     <ul>
         {% for pedido in pedidos %}
             <li>
-                <h3>Pedido de {{ pedido.cliente.nome }} em {{ pedido.data_pedido }}</h3>
+                  <h3>Pedido de {{ pedido.cliente.nome }} em {{ pedido.data_pedido }}</h3>
                 <ul>
                     {% for item_pedido in pedido.itempedido_set.all %}
                         <li>
                             Produto: {{ item_pedido.produto.nome }} - Quantidade: {{ item_pedido.quantidade }} - Preço: {{ item_pedido.preco }}
-                            <a href="{% url 'detalhes_item_pedido' item_pedido.id %}">Detalhes do Produto</a>
+                            <!-- <a href="{% url 'detalhes_item_pedido' item_pedido.id %}">Detalhes do Pedido</a> -->
                         </li>
                     {% endfor %}
                 </ul>
@@ -28,5 +23,6 @@
         {% endfor %}
     </ul>
     <a href="{% url 'criar_pedido' %}">Novo Pedido</a>
-</body>
-</html>
+</div>
+{% endblock %}
+
