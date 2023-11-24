@@ -1,9 +1,8 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Detalhes do Item de Pedido</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% block title %}Detalhes do Pedido{% endblock %}
+{% block content %}
+{% load static %}
+<div>
     <h3>Pedido de {{ pedido.cliente.nome }} em {{ pedido.data_pedido }} Status : {{pedido.status}}</h3>
     <ul>
         {% for item_pedido in pedido.itempedido_set.all %}
@@ -18,5 +17,5 @@
     </p>
     <a href="{% url 'adicionar_item_pedido' pedido.id %}" class="btn btn-primary">Adicionar Item</a>
     <a href="{% url 'deletar_pedido' pedido.id %}" class="btn btn-danger">Deletar Pedido</a>
-</body>
-</html>
+</div>
+{% endblock %}

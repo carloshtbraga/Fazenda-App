@@ -1,14 +1,12 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Adicionar Item ao Pedido</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% block title %}Adicionar Item ao Pedido{% endblock %}
+{% block content %}
+<div>
     <h1>Adicionar Item ao Pedido</h1>
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit">Adicionar Item ao Pedido</button>
     </form>
-</body>
-</html>
+</div>
+{% endblock %}

@@ -19,13 +19,18 @@
 
     .header{
       height: 80px;
+      padding: 0 20px;
+    }
 
+    .list {
+      margin-top: 1.2rem;
+      margin-bottom: 1.5rem;
     }
     </style>
 </head>
 
 <body class="d-flex flex-column align-items-center d-sm bg-light text-dark">
-  <header class="nav bg-dark rounded m-2 w-100 header">
+  <header class="nav bg-dark rounded mb-5 w-100 header">
     <a class="nav-link text-light" href="{% url 'listar_clientes' %}">Clientes <i class="bi bi-person-arms-up"></i></a>
     <a class="nav-link text-light" href="{% url 'listar_produtos' %}">Produtos <i class="bi bi-apple"></i></a> 
     <a class="nav-link text-light" href="{% url 'listar_pedidos' %}">Pedidos <i class="bi bi-box-seam"></i></a>

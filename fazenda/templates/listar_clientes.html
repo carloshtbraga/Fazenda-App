@@ -1,18 +1,20 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Listagem de Clientes</title>
-</head>
-<body>
-    <h1>Listagem de Clientes</h1>
-    <ul>
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Listagem de Clientes{% endblock %}
+{% block content %}
+<div class="ul-container">
+    <h1 class="">Listagem de Clientes</h1>
+    <ul class="h5">
     {% for cliente in clientes %}
-        <li>
+        <li class="list">
             {{ cliente.nome }} - {{ cliente.empresa }} - {{ cliente.telefone }}
-            <a href="{% url 'atualizar_cliente' cliente.pk %}"><i class="bi bi-pencil-square"></i></a>
-            <a href="{% url 'deletar_cliente' cliente.pk %}"><i class="bi bi-trash3-fill"></i></a>
+            <a href="{% url 'atualizar_cliente' cliente.pk %}"><i class="bi bi-pencil-square text-success"></i></a>
+            <a href="{% url 'deletar_cliente' cliente.pk %}"><i class="bi bi-trash3-fill text-danger"></i></a>
         </li>
     {% endfor %}
   </ul>
-  <a href="{% url 'criar_cliente' %}">Novo Cliente</a>
+  <a
+  class="btn btn-primary btn-lg btn-block"
+    href="{% url 'criar_cliente' %}">Novo Cliente</a>
 </div>
+{% endblock %}

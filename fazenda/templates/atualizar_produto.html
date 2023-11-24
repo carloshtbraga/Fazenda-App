@@ -1,9 +1,8 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Atualizar Produto</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Atualizar Produto{% endblock %}
+{% block content %}
+<div>
     <h1>Atualizar Produto</h1>
     <form method="post">
         {% csrf_token %}
@@ -11,5 +10,6 @@
         <button type="submit">Atualizar Produto</button>
     </form>
     <a href="{% url 'listar_produtos' %}">Voltar para a listagem</a>
-</body>
-</html>
+</div>
+{% endblock %}
+

@@ -1,34 +1,32 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Listagem de Pedidos</title>
-</head>
-<body>
-    <a href="{% url 'listar_clientes' %}">Clientes</a>
-    <a href="{% url 'listar_produtos' %}">Produtos</a>
-    <a href="{% url 'listar_pedidos' %}">Pedidos</a>
-    <h1>Listagem de Pedidos</h1>
-    <a href="{% url 'criar_pedido' %}">Novo Pedido</a>
-    <br><br>
-
-    <form method="GET">
-        <label for="status">Filtrar por status:</label>
-        <select name="status" id="status">
-            <option value="">Todos</option>
-            <option value="Concluído">Concluído</option>
-            <option value="Pendente">Pendente</option>
-        </select>
-        <button type="submit">Filtrar</button>
-    </form>
-
-    Total Pedidos: {{ pedidos|length }}
-    
-    <ul>
-        {% for pedido in pedidos %}
-            <a href="{% url 'detalhes_item_pedido' pedido.id %}">
-                <h3>Pedido {{ pedido.pk }} - {{ pedido.cliente.nome }} - {{ pedido.data_pedido }}</h3>
-            </a>
-        {% endfor %}
-    </ul>
-</body>
-</html>
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Listagem de Pedidos{% endblock %}
+{% block content %}
+    <div>
+        <a href="{% url 'listar_clientes' %}
+        ">Clientes</a>
+        <a href="{% url 'listar_produtos' %}">Produtos</a>
+        <a href="{% url 'listar_pedidos' %}">Pedidos</a>
+        <h1>Listagem de Pedidos</h1>
+        <a href="{% url 'criar_pedido' %}">Novo Pedido</a>
+        <br>
+        <br>
+        <form method="GET">
+            <label for="status">Filtrar por status:</label>
+            <select name="status" id="status">
+                <option value="">Todos</option>
+                <option value="Concluído">Concluído</option>
+                <option value="Pendente">Pendente</option>
+            </select>
+            <button type="submit">Filtrar</button>
+        </form>
+        Total Pedidos: {{ pedidos|length }}
+        <ul>
+            {% for pedido in pedidos %}
+                <a href="{% url 'detalhes_item_pedido' pedido.id %}">
+                    <h3>Pedido {{ pedido.pk }} - {{ pedido.cliente.nome }} - {{ pedido.data_pedido }}</h3>
+                </a>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

@@ -1,14 +1,13 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Deletar Cliente</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Atualizar Produto{% endblock %}
+{% block content %}
+<div>
     <h1>Deletar Cliente</h1>
     <p>Você tem certeza que deseja deletar o cliente {{ cliente.nome }}?</p>
     <form method="post">
         {% csrf_token %}
         <button type="submit" class="btn btn-danger">Confirmar Deleção</button>
     </form>
-</body>
-</html>
+</div>
+{% endblock %}
