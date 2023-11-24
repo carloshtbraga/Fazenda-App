@@ -1,19 +1,19 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Detalhes do Item de Pedido</title>
-</head>
-<body>
-    <h3>Pedido de {{ pedido.cliente.nome }} em {{ pedido.data_pedido }}</h3>
-    <ul>
-        {% for item_pedido in pedido.itempedido_set.all %}
-            <li>
-                Produto: {{ item_pedido.produto.nome }} - Quantidade: {{ item_pedido.quantidade }} - Preço: {{ item_pedido.preco }}
-            </li>
-        {% endfor %}
-    </ul>
-    <p>
-        <strong>Total do Pedido: R$ {{ pedido.total_pedido }}</strong>
-    </p>
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% block title %}Detalhes do Pedido{% endblock %}
+{% block content %}
+
+<div>
+  <h3>Pedido de {{ pedido.cliente.nome }} em {{ pedido.data_pedido }}</h3>
+  <ul>
+    {% for item_pedido in pedido.itempedido_set.all %}
+    <li>
+      Produto: {{ item_pedido.produto.nome }} - Quantidade: {{ item_pedido.quantidade }} - Preço: {{ item_pedido.preco
+      }}
+    </li>
+    {% endfor %}
+  </ul>
+  <p>
+    <strong>Total do Pedido: R$ {{ pedido.total_pedido }}</strong>
+  </p>
+</div>{% endblock %}
