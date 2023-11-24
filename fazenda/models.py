@@ -24,7 +24,8 @@ class Pedido(models.Model):
     data_pedido = models.DateField(auto_now_add=True)
 
     def __str__(self):
-        return f"Pedido de {self.cliente} em {self.data_pedido}"
+        itens = ', '.join([f"{item.quantidade}x {item.produto.nome} por R$ {item.preco}" for item in self.itempedido_set.all()])
+        return f"Pedido de {self.cliente} em {self.data_pedido} com {itens}"
 
 
 class ItemPedido(models.Model):
@@ -35,4 +36,4 @@ class ItemPedido(models.Model):
     # Adicione outros campos relevantes para o item do pedido, se necessário
 
     def __str__(self):
-        return f"{self.quantidade}x {self.produto} no {self.pedido}"
+        return f"{self.quantidade}x {self.produto} por R$ {self.preco } no pedido {self.pedido.pk}"

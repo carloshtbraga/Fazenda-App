@@ -1,7 +1,7 @@
-from django.shortcuts import redirect, render
-
-from .forms import ClienteForm, ItemPedidoForm, PedidoForm, ProdutoForm
-from .models import Cliente, Pedido, Produto
+from django.shortcuts import redirect, render, get_object_or_404
+from django.db.models import Sum, F
+from .forms import ClienteForm, PedidoForm, ProdutoForm, ItemPedidoForm
+from .models import Cliente, Pedido, Produto, ItemPedido
 
 
 # Create your views here.
@@ -42,34 +42,42 @@ def criar_produto(request):
 
 
 def listar_pedidos(request):
-    pedidos = Pedido.objects.all()  # type: ignore
+    pedidos = Pedido.objects.annotate(
+        total_pedido=Sum(F('itempedido__quantidade') * F('itempedido__preco'))
+    )
     return render(request, "listar_pedidos.html", {"pedidos": pedidos})
 
 
 def criar_pedido(request):
     if request.method == "POST":
-        print(request.POST)
-        pedido_form = PedidoForm(request.POST)
-        item_pedido_formset = ItemPedidoForm(request.POST)
+        form = PedidoForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect(
+                "listar_pedidos"
+            )  # Redireciona para a lista de pedidos após a criação bem-sucedida
+    else:
+        form = PedidoForm()
 
-        if pedido_form.is_valid() and item_pedido_formset.is_valid():
-            pedido = pedido_form.save()
-            itens_pedido = item_pedido_formset.save(commit=False)
+    return render(request, "criar_pedido.html", {"form": form})
 
-            for item in itens_pedido:
-                item.pedido = pedido
-                item.save()
 
+def detalhes_item_pedido(request, pk):
+    item_pedido = get_object_or_404(ItemPedido, pk=pk)
+    return render(request, "detalhes_item_pedido.html", {"item_pedido": item_pedido})
+
+
+def adicionar_item_pedido(request, pedido_id):
+    pedido = get_object_or_404(Pedido, pk=pedido_id)
+
+    if request.method == "POST":
+        form = ItemPedidoForm(request.POST)
+        if form.is_valid():
+            item_pedido = form.save(commit=False)
+            item_pedido.pedido = pedido
+            item_pedido.save()
             return redirect("listar_pedidos")
     else:
-        pedido_form = PedidoForm()
-        item_pedido_formset = ItemPedidoForm()
+        form = ItemPedidoForm()
 
-    return render(
-        request,
-        "criar_pedido.html",
-        {
-            "pedido_form": pedido_form,
-            "item_pedido_formset": item_pedido_formset,
-        },
-    )
+    return render(request, "adicionar_item_pedido.html", {"form": form})

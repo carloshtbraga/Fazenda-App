@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Criar Pedido</title>
+    <title>Adicionar Item ao Pedido</title>
 </head>
 <body>
-    <h1>Criar Pedido</h1>
+    <h1>Adicionar Item ao Pedido</h1>
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">Criar Pedido</button>
+        <button type="submit">Adicionar Item ao Pedido</button>
     </form>
 </body>
 </html>
