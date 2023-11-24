@@ -11,19 +11,8 @@
     <ul>
         {% for pedido in pedidos %}
             <li>
-                <h3>Pedido de {{ pedido.cliente.nome }} em {{ pedido.data_pedido }}</h3>
-                <ul>
-                    {% for item_pedido in pedido.itempedido_set.all %}
-                        <li>
-                            Produto: {{ item_pedido.produto.nome }} - Quantidade: {{ item_pedido.quantidade }} - Preço: {{ item_pedido.preco }}
-                            <a href="{% url 'detalhes_item_pedido' item_pedido.id %}">Detalhes do Produto</a>
-                        </li>
-                    {% endfor %}
-                </ul>
-                <p>
-                    <strong>Total do Pedido: R$ {{ pedido.total_pedido }}</strong>
-                </p>
-                <a href="{% url 'adicionar_item_pedido' pedido.id %}">Adicionar Item</a>
+                <a href="{% url 'detalhes_item_pedido' pedido.id %}"> <h3>Pedido de {{ pedido.cliente.nome }} em {{ pedido.data_pedido }}</h3></a>
+
             </li>
         {% endfor %}
     </ul>
