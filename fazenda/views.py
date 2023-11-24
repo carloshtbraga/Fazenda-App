@@ -1,6 +1,7 @@
-from django.shortcuts import render, redirect
-from .models import Cliente, Produto, Pedido
-from .forms import ClienteForm, ProdutoForm, PedidoForm, ItemPedidoForm
+from django.shortcuts import redirect, render
+
+from .forms import ClienteForm, ItemPedidoForm, PedidoForm, ProdutoForm
+from .models import Cliente, Pedido, Produto
 
 
 # Create your views here.
@@ -9,7 +10,7 @@ def index(request):
 
 
 def listar_clientes(request):
-    clientes = Cliente.objects.all()
+    clientes = Cliente.objects.all()  # type: ignore
     return render(request, "listar_clientes.html", {"clientes": clientes})
 
 
@@ -25,7 +26,7 @@ def criar_cliente(request):
 
 
 def listar_produtos(request):
-    produtos = Produto.objects.all()
+    produtos = Produto.objects.all()  # type: ignore
     return render(request, "listar_produtos.html", {"produtos": produtos})
 
 
@@ -41,12 +42,13 @@ def criar_produto(request):
 
 
 def listar_pedidos(request):
-    pedidos = Pedido.objects.all()
+    pedidos = Pedido.objects.all()  # type: ignore
     return render(request, "listar_pedidos.html", {"pedidos": pedidos})
 
 
 def criar_pedido(request):
     if request.method == "POST":
+        print(request.POST)
         pedido_form = PedidoForm(request.POST)
         item_pedido_formset = ItemPedidoForm(request.POST)
 
@@ -66,5 +68,8 @@ def criar_pedido(request):
     return render(
         request,
         "criar_pedido.html",
-        {"pedido_form": pedido_form, "item_pedido_formset": item_pedido_formset},
+        {
+            "pedido_form": pedido_form,
+            "item_pedido_formset": item_pedido_formset,
+        },
     )

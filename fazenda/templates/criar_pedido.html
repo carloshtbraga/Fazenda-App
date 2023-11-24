@@ -1,21 +1,41 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Cadastrar Novo Pedido</title>
-</head>
-<body>
-    <h1>Cadastrar Novo Pedido</h1>
-    <form method="post">
-        {% csrf_token %}
-        {{ pedido_form.as_p }}
-        
-        {{ item_pedido_formset.management_form }}
-        {% for form in item_pedido_formset %}
-            {{ form.as_p }}
-        {% endfor %}
 
-        <button type="submit">Salvar</button>
-    </form>
-    <a href="{% url 'listar_pedidos' %}">Voltar para a listagem</a>
+<head>
+  <title>Cadastrar Novo Pedido</title>
+</head>
+
+<body>
+  <a href="{% url 'listar_clientes' %}">Clientes</a>
+  <a href="{% url 'listar_produtos' %}">Produtos</a>
+  <a href="{% url 'listar_pedidos' %}">Pedidos</a>
+  <h1>Cadastrar Novo Pedido</h1>
+  <form method="post">
+
+    {% csrf_token %}
+    <label for="cliente">Selecione o cliente:</label><br>
+    <select name="cliente" id="cliente">
+      {% for cliente in pedido_form.cliente %}
+      <option value="{{ cliente.id }}">{{ cliente }}</option>
+      {% endfor %}
+    </select><br>
+    <label for="produtos">Selecione os produtos:</label><br>
+    {% for produto in pedido_form.produtos %}
+
+    <label for="produto_{{ produto.id }}">{{ produto }}</label><br>
+    <input type="checkbox" id="produto_{{ produto.id }}" name="produtos" value="{{ produto.id }}">
+
+    <label for="quantidade">Quantidade:</label>
+    <input type="number" id="quantidade" name="quantidade">
+
+    <label for="preco">Preço:</label>
+    <input type="text" id="preco" name="preco">
+    {% endfor %}
+
+
+    <button type="submit">Salvar</button>
+  </form>
+  <a href="{% url 'listar_pedidos' %}">Voltar para a listagem</a>
 </body>
+
 </html>

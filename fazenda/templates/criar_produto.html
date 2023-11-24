@@ -4,6 +4,9 @@
     <title>Cadastrar Novo Produto</title>
 </head>
 <body>
+<a href="{% url 'listar_clientes' %}">Clientes</a>
+<a href="{% url 'listar_produtos' %}">Produtos</a>
+<a href="{% url 'listar_pedidos' %}">Pedidos</a>
     <h1>Cadastrar Novo Produto</h1>
     <form method="post">
         {% csrf_token %}
