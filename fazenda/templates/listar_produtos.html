@@ -7,7 +7,7 @@
     <h1>Listagem de Produtos</h1>
     <ul>
     {% for produto in produtos %}
-        <li>{{ produto.nome }} - Tempo de Preparo: {{ produto.tempo_preparo }} minutos</li>
+        <li>{{ produto.nome }} - Tempo de Preparo: {{ produto.tempo_preparo }} dias</li>
     {% endfor %}
     </ul>
     <a href="{% url 'criar_produto' %}">Novo Produto</a>

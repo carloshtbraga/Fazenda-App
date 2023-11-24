@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cadastrar Novo Pedido</title>
+</head>
+<body>
+    <h1>Cadastrar Novo Pedido</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ pedido_form.as_p }}
+        
+        {{ item_pedido_formset.management_form }}
+        {% for form in item_pedido_formset %}
+            {{ form.as_p }}
+        {% endfor %}
+
+        <button type="submit">Salvar</button>
+    </form>
+    <a href="{% url 'listar_pedidos' %}">Voltar para a listagem</a>
+</body>
+</html>
