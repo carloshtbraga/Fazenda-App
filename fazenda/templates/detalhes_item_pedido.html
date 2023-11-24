@@ -12,6 +12,7 @@
             </li>
         {% endfor %}
     </ul>
+    <a href="{% url 'concluir_pedido' pedido.id %}">Concluir Pedido</a>
     <p>
         <strong>Total do Pedido: R$ {{ pedido.total_pedido }}</strong>
     </p>

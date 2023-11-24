@@ -86,9 +86,12 @@ def deletar_produto(request, produto_id):
 
 
 def listar_pedidos(request):
-    pedidos = Pedido.objects.annotate(
-        total_pedido=Sum(F("itempedido__quantidade") * F("itempedido__preco"))
-    )
+    status_filter = request.GET.get("status")
+    pedidos = Pedido.objects.all()
+
+    if status_filter:
+        pedidos = pedidos.filter(status=status_filter)
+
     return render(request, "listar_pedidos.html", {"pedidos": pedidos})
 
 
@@ -110,7 +113,7 @@ def deletar_pedido(request, pedido_id):
     pedido = get_object_or_404(Pedido, pk=pedido_id)
     if request.method == "POST":
         pedido.delete()
-        return redirect('listar_pedidos')
+        return redirect("listar_pedidos")
     return render(request, "deletar_pedido.html", {"pedido": pedido})
 
 
@@ -140,3 +143,10 @@ def adicionar_item_pedido(request, pedido_id):
         form = ItemPedidoForm()
 
     return render(request, "adicionar_item_pedido.html", {"form": form})
+
+
+def marcar_pedido_como_concluido(request, pedido_id):
+    pedido = get_object_or_404(Pedido, pk=pedido_id)
+    pedido.status = "Concluído"
+    pedido.save()
+    return redirect("detalhes_item_pedido", pk=pedido_id)
