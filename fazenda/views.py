@@ -43,7 +43,7 @@ def criar_produto(request):
 
 def listar_pedidos(request):
     pedidos = Pedido.objects.annotate(
-        total_pedido=Sum(F('itempedido__quantidade') * F('itempedido__preco'))
+        total_pedido=Sum(F("itempedido__quantidade") * F("itempedido__preco"))
     )
     return render(request, "listar_pedidos.html", {"pedidos": pedidos})
 
@@ -63,8 +63,15 @@ def criar_pedido(request):
 
 
 def detalhes_item_pedido(request, pk):
-    item_pedido = get_object_or_404(ItemPedido, pk=pk)
-    return render(request, "detalhes_item_pedido.html", {"item_pedido": item_pedido})
+    pedido = get_object_or_404(Pedido, pk=pk)
+    pedido.total_pedido = (
+        pedido.itempedido_set.aggregate(total=Sum(F("quantidade") * F("preco")))[
+            "total"
+        ]
+        or 0
+    )  # Caso não haja itens no pedido
+
+    return render(request, "detalhes_item_pedido.html", {"pedido": pedido})
 
 
 def adicionar_item_pedido(request, pedido_id):
