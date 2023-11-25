@@ -2,8 +2,9 @@
 {% block title %}Deletar Produto{% endblock %}
 {% block content %}
 <div>
-    <h1>Deletar Produto</h1>
-    <p>Tem certeza que deseja deletar o produto "{{ produto.nome }}"?</p>
+    <h4
+    class="alert alert-danger"
+  >Tem certeza que deseja deletar o produto "{{ produto.nome }}"?</h4>
     <form method="post">
         {% csrf_token %}
         <button type="submit" class="btn btn-danger">Deletar Produto</button>

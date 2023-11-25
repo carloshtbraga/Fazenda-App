@@ -2,31 +2,33 @@
 {% load static %}
 {% block title %}Listagem de Pedidos{% endblock %}
 {% block content %}
-    <div>
-        <a href="{% url 'listar_clientes' %}
-        ">Clientes</a>
-        <a href="{% url 'listar_produtos' %}">Produtos</a>
-        <a href="{% url 'listar_pedidos' %}">Pedidos</a>
+    <div class="container-fluid d-flex flex-column justify-content-center align-items-center">
         <h1>Listagem de Pedidos</h1>
-        <a href="{% url 'criar_pedido' %}">Novo Pedido</a>
-        <br>
-        <br>
-        <form method="GET">
+        <h5>Total Pedidos: {{ pedidos|length }}</h5>
+        <form method="GET" class="d-flex flex-column align-items-center form">
             <label for="status">Filtrar por status:</label>
-            <select name="status" id="status">
+            <select name="status" id="status" class="form-control select">
                 <option value="">Todos</option>
                 <option value="Concluído">Concluído</option>
                 <option value="Pendente">Pendente</option>
             </select>
-            <button type="submit">Filtrar</button>
+            <button class="btn btn-primary mt-3" type="submit">Filtrar</button>
         </form>
-        Total Pedidos: {{ pedidos|length }}
-        <ul>
+        <hr>
+        <h2>Pedidos</h2>
+        <ul class="h5 list-group list-group-flush w-75 d-flex flex-column justify-content-center align-items-center">
             {% for pedido in pedidos %}
-                <a href="{% url 'detalhes_item_pedido' pedido.id %}">
-                    <h3>Pedido {{ pedido.pk }} - {{ pedido.cliente.nome }} - {{ pedido.data_pedido }}</h3>
-                </a>
-            {% endfor %}
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center list"
+                   href="{% url 'detalhes_item_pedido' pedido.id %}">
+                    <!-- <h5 class=""> -->
+                    Pedido {{ pedido.pk }} - {{ pedido.cliente.nome }} - {{ pedido.data_pedido }}
+                    {% if pedido.status == 'Concluído' %}
+                        <i class="bi bi-check-lg text-success"></i>
+                    {% else %}
+                        <i class="bi bi-hourglass-split text-primary"></i>
+                    {% endif %}
+                {% endfor %}
+            </a>
         </ul>
     </div>
 {% endblock %}

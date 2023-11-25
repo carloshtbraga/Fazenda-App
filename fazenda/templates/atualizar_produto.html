@@ -7,7 +7,9 @@
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">Atualizar Produto</button>
+        <button 
+        class="btn btn-primary"
+      type="submit">Atualizar Produto</button>
     </form>
     <a href="{% url 'listar_produtos' %}">Voltar para a listagem</a>
 </div>

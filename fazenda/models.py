@@ -31,6 +31,9 @@ class Pedido(models.Model):
         default="Pendente",
     )
 
+    # def data_formatada(self):
+    #     return self.data_pedido.strftime("%d/%m/%Y")
+
     def __str__(self):
         itens = ', '.join([f"{item.quantidade}x {item.produto.nome} por R$ {item.preco}" for item in self.itempedido_set.all()])
         return f"Pedido de {self.cliente} em {self.data_pedido} com {itens}"

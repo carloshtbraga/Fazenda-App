@@ -1,4 +1,4 @@
-{extends 'base.html' %}
+{% extends 'base.html' %}
 {% load static %}
 {% block title %}Atualizar Cliente{% endblock %}
 {% block content %}
@@ -7,7 +7,9 @@
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">Atualizar</button>
+        <button
+        class="btn btn-primary"
+      type="submit">Atualizar</button>
     </form>
 </div>
 {% endblock %}

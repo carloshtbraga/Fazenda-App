@@ -2,12 +2,11 @@
 {% load static %}
 {% block title %}Atualizar Produto{% endblock %}
 {% block content %}
-<div>
-    <h1>Deletar Cliente</h1>
-    <p>Você tem certeza que deseja deletar o cliente {{ cliente.nome }}?</p>
-    <form method="post">
-        {% csrf_token %}
-        <button type="submit" class="btn btn-danger">Confirmar Deleção</button>
-    </form>
-</div>
+    <div>
+        <h4 class="alert alert-danger">Você tem certeza que deseja deletar o cliente {{ cliente.nome }}?</h4>
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Confirmar Deleção</button>
+        </form>
+    </div>
 {% endblock %}

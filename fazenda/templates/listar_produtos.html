@@ -1,19 +1,19 @@
 {% extends 'base.html' %}
-
 {% block title %}Listagem de Produtos{% endblock %}
-
 {% block content %}
-<div>
-  <h1>Listagem de Produtos</h1>
-  <ul>
-    {% for produto in produtos %}
-        <li>
-            {{ produto.nome }} - Tempo de Preparo: {{ produto.tempo_preparo }} dias
-            <a href="{% url 'atualizar_produto' produto.pk %}">Atualizar</a>
-            <a href="{% url 'deletar_produto' produto.pk %}">Deletar</a>
-        </li>
-    {% endfor %}
-  </ul>
-  <a href="{% url 'criar_produto' %}" class="btn btn-success">Criar Produto</a>
-</div>
+    <div class="container-fluid d-flex flex-column justify-content-center align-items-center">
+        <h1>Listagem de Produtos</h1>
+        <ul class=" h5 list-group list-group-flush w-75 d-flex flex-column justify-content-center align-items-center">
+            {% for produto in produtos %}
+                <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center list">
+                    {{ produto.nome }} - Tempo de Preparo: {{ produto.tempo_preparo }} dias
+                    <div class="d-flex justify-content-between align-items-center btns">
+                        <a href="{% url 'atualizar_produto' produto.pk %}"><i class="bi bi-pencil-square text-success"></i></a>
+                        <a href="{% url 'deletar_produto' produto.pk %}"><i class="bi bi-trash3-fill text-danger ico"></i></a>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+        <a href="{% url 'criar_produto' %}" class="btn btn-success">Criar Produto</a>
+    </div>
 {% endblock %}
