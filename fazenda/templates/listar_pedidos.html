@@ -7,12 +7,14 @@
         <h5>Total Pedidos: {{ pedidos|length }}</h5>
         <form method="GET" class="d-flex flex-column align-items-center form">
             <label for="status">Filtrar por status:</label>
-            <select name="status" id="status" class="form-control select">
+            <select name="status" id="status" 
+      class="form-control selectpicker w-100 text-center text-lg"
+    >
                 <option value="">Todos</option>
                 <option value="Concluído">Concluído</option>
                 <option value="Pendente">Pendente</option>
             </select>
-            <button class="btn btn-primary mt-3" type="submit">Filtrar</button>
+            <button class="btn btn-primary mt-3 btn-lg" type="submit">Filtrar</button>
         </form>
         <hr>
         <h2>Pedidos</h2>
