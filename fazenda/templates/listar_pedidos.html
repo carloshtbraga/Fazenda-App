@@ -3,18 +3,22 @@
 {% block title %}Listagem de Pedidos{% endblock %}
 {% block content %}
     <div class="container-fluid d-flex flex-column justify-content-center align-items-center pedidos">
-        <h1>Listagem de Pedidos</h1>
-        <h5>Total Pedidos: {{ pedidos|length }}</h5>
-        <form method="GET" class="d-flex flex-column align-items-center form">
+        <!-- <h1>Listagem de Pedidos</h1> -->
+        <h5 class="text-center text-lg fs-3 mb-4">
+            Total Pedidos:
+            <span class="text-primary">{{ pedidos|length }}</span>
+        </h5>
+        <form method="GET"
+              class="d-flex flex-row justify-content-center align-items-center form w-75 fs-3">
             <label for="status">Filtrar por status:</label>
             <select name="status"
                     id="status"
-                    class="form-control selectpicker w-100 text-center text-lg">
+                    class="form-control selectpicker w-25 text-center text-lg fs-4">
                 <option value="">Todos</option>
                 <option value="Concluído">Concluído</option>
                 <option value="Pendente">Pendente</option>
             </select>
-            <button class="btn btn-primary mt-3 btn-lg" type="submit">Filtrar</button>
+            <button class="btn btn-primary btn-lg ms-3 " type="submit">Filtrar</button>
         </form>
         <hr>
         <h2>Pedidos</h2>
