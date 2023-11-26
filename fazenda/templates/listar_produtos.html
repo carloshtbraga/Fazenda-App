@@ -6,8 +6,12 @@
         <ul class=" h5 list-group list-group-flush w-75 d-flex flex-column justify-content-center align-items-center">
             {% for produto in produtos %}
                 <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center list">
-                    {{ produto.nome }} - Tempo de Preparo: {{ produto.tempo_preparo }} dias
-                    <div class="d-flex justify-content-between align-items-center btns">
+                    <!-- {{ produto.nome }} - Tempo de Preparo: {{ produto.tempo_preparo }} dias -->
+                    <div class="d-flex flex-column">
+                        <span class="fw-bold fs-4 text-primary">{{ produto.nome }}</span>
+                        <span class="text-secondary">Tempo de Preparo: {{ produto.tempo_preparo }} dias</span>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center btns h3">
                         <a href="{% url 'atualizar_produto' produto.pk %}"><i class="bi bi-pencil-square text-success"></i></a>
                         <a href="{% url 'deletar_produto' produto.pk %}"><i class="bi bi-trash3-fill text-danger ico"></i></a>
                     </div>
