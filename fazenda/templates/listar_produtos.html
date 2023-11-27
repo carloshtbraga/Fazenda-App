@@ -2,7 +2,7 @@
 {% block title %}Listagem de Produtos{% endblock %}
 {% block content %}
     <div class="container-fluid d-flex flex-column justify-content-center align-items-center">
-        <h1><i class="bi bi-apple"> </i>Lista de Produtos</h1>
+        <h1><i class="bi bi-apple text-success"> </i>Lista de Produtos</h1>
         <a href="{% url 'criar_produto' %}" class="btn btn-lg btn-success mt-3 mb-4">Criar Produto</a>
         <ul class=" h5 list-group list-group-flush w-75 d-flex flex-column justify-content-center align-items-center">
             {% for produto in produtos %}

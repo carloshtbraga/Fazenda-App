@@ -3,7 +3,8 @@
 {% block title %}Cadastrar Cliente{% endblock %}
 {% block content %}
     <div>
-        <h1>Cadastrar Novo Cliente</h1>
+        <h1> <i class="bi bi-person-arms-up text-success"></i>
+    Cadastrar Novo Cliente</h1>
         <form method="post" class="form-group">
             {% csrf_token %}
             {{ form.as_p }}
@@ -11,4 +12,10 @@
         </form>
         <a class="btn btn-warning mt-3 " href="{% url 'listar_clientes' %}">Voltar</a>
     </div>
+<script>
+  $(document).ready(function () {
+    // Aplicar a máscara de CEP (#####-###) apenas ao campo CEP com o id 'id_cep'
+    $('#id_telefone').mask('(00) 00000-0000');
+  });
+</script>
 {% endblock %}

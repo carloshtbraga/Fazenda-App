@@ -99,9 +99,11 @@ def criar_pedido(request):
     if request.method == "POST":
         form = PedidoForm(request.POST)
         if form.is_valid():
-            form.save()
+            print("FORMROFMROM", form)
+            id = form.save()
             return redirect(
-                "listar_pedidos"
+                "detalhes_item_pedido",
+                pk=id.id
             )  # Redireciona para a lista de pedidos após a criação bem-sucedida
     else:
         form = PedidoForm()
