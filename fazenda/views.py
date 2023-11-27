@@ -1,5 +1,5 @@
 from django.shortcuts import redirect, render, get_object_or_404
-from django.db.models import Sum, F
+from django.db.models import Sum, F, Q
 from .forms import ClienteForm, PedidoForm, ProdutoForm, ItemPedidoForm
 from .models import Cliente, Pedido, Produto, ItemPedido
 
@@ -10,8 +10,21 @@ def index(request):
 
 
 def listar_clientes(request):
-    clientes = Cliente.objects.all()  # type: ignore
-    return render(request, "listar_clientes.html", {"clientes": clientes})
+    termo_pesquisa = request.GET.get("q")  # Obtém o termo de pesquisa, se presente
+    if termo_pesquisa:
+        clientes = Cliente.objects.filter(
+            Q(nome__icontains=termo_pesquisa) | Q(empresa__icontains=termo_pesquisa)
+        )
+    else:
+        clientes = Cliente.objects.all()
+
+    total_clientes = clientes.count()  # Obtém o total de clientes
+
+    return render(
+        request,
+        "listar_clientes.html",
+        {"clientes": clientes, "total_clientes": total_clientes},
+    )
 
 
 def criar_cliente(request):
@@ -48,8 +61,19 @@ def deletar_cliente(request, pk):
 
 
 def listar_produtos(request):
-    produtos = Produto.objects.all()  # type: ignore
-    return render(request, "listar_produtos.html", {"produtos": produtos})
+    termo_pesquisa = request.GET.get("q")  # Obtém o termo de pesquisa, se presente
+    if termo_pesquisa:
+        produtos = Produto.objects.filter(nome__icontains=termo_pesquisa)
+    else:
+        produtos = Produto.objects.all()
+
+    total_produtos = produtos.count()  # Obtém o total de produtos
+
+    return render(
+        request,
+        "listar_produtos.html",
+        {"produtos": produtos, "total_produtos": total_produtos},
+    )
 
 
 def criar_produto(request):
@@ -86,13 +110,31 @@ def deletar_produto(request, produto_id):
 
 
 def listar_pedidos(request):
-    status_filter = request.GET.get("status")
-    pedidos = Pedido.objects.all()
+    termo_pesquisa = request.GET.get("q")
 
-    if status_filter:
-        pedidos = pedidos.filter(status=status_filter)
+    pedidos = Pedido.objects.filter(status="Pendente")
+
+    if termo_pesquisa:
+        pedidos = pedidos.filter(
+            Q(cliente__nome__icontains=termo_pesquisa)
+            | Q(cliente__empresa__icontains=termo_pesquisa)
+        )
 
     return render(request, "listar_pedidos.html", {"pedidos": pedidos})
+
+
+def listar_pedidos_concluidos(request):
+    termo_pesquisa = request.GET.get("q")
+
+    pedidos = Pedido.objects.filter(status="Concluído")
+
+    if termo_pesquisa:
+        pedidos = pedidos.filter(
+            Q(cliente__nome__icontains=termo_pesquisa)
+            | Q(cliente__empresa__icontains=termo_pesquisa)
+        )
+
+    return render(request, "listar_pedidos_concluidos.html", {"pedidos": pedidos})
 
 
 def criar_pedido(request):
@@ -102,8 +144,7 @@ def criar_pedido(request):
             print("FORMROFMROM", form)
             id = form.save()
             return redirect(
-                "detalhes_item_pedido",
-                pk=id.id
+                "detalhes_item_pedido", pk=id.id
             )  # Redireciona para a lista de pedidos após a criação bem-sucedida
     else:
         form = PedidoForm()

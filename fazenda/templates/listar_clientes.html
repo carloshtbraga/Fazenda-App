@@ -6,7 +6,17 @@
         <h1 class="">
             <i class="bi bi-person-arms-up text-success"></i> Lista de Clientes
         </h1>
-        <a class="btn btn-success btn-lg btn-block mb-4 mt-3"
+        <form method="GET" action="{% url 'listar_clientes' %}" class="tex d-flex flex-column justify-content-center">
+            <input class="form-control"type="text" name="q" placeholder ="Pesquisar por nome ou empresa" />
+            <button type="submit" class="btn btn-success mt-2 mb-3">Pesquisar</button>
+        </form>
+        
+        <!-- Exibir o total de clientes -->
+
+        <h5 class="text-center text-lg fs-3">
+            Total de Clientes: <span class="text-success">{{ total_clientes }}</span>
+        </h5>
+        <a class="btn btn-success btn-lg btn-block mb-4"
            href="{% url 'criar_cliente' %}">Novo Cliente</a>
         <ul class="h5 list-group list-group-flush w-75 d-flex flex-column justify-content-center align-items-center">
             {% for cliente in clientes %}

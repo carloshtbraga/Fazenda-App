@@ -24,6 +24,11 @@ urlpatterns = [
     ),
     path("produtos/novo/", views.criar_produto, name="criar_produto"),
     path("pedidos/", views.listar_pedidos, name="listar_pedidos"),
+    path(
+        "pedidos_concluidos/",
+        views.listar_pedidos_concluidos,
+        name="listar_pedidos_concluidos",
+    ),
     path("pedidos/novo/", views.criar_pedido, name="criar_pedido"),
     path(
         "pedido/<int:pedido_id>/adicionar_item/",
