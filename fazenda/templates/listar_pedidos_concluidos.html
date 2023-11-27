@@ -23,6 +23,7 @@
             <a class="btn btn-lg btn-success fs-5 mb-2" href="{% url 'criar_pedido' %}">Criar</a>
             <a class="btn btn-lg btn btn-outline-primary fs-5 mb-2" href="{% url 'listar_pedidos' %}">Pendentes</a>
         </div>
+        <hr>
         <ul class="h5 list-group list-group-flush w-75 d-flex flex-column justify-content-center align-items-center">
             {% for pedido in pedidos %}
                 <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center list"

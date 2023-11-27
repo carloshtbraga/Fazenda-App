@@ -2,6 +2,7 @@ from django.shortcuts import redirect, render, get_object_or_404
 from django.db.models import Sum, F, Q, Count
 from .forms import ClienteForm, PedidoForm, ProdutoForm, ItemPedidoForm
 from .models import Cliente, Pedido, Produto, ItemPedido
+from django.utils import timezone
 
 
 # Create your views here.
@@ -206,3 +207,31 @@ def alternar_checkbox_item_pedido(request, item_pedido_id):
     item_pedido.marcado = not item_pedido.marcado
     item_pedido.save()
     return print("foi")
+
+
+def estatisticas(request):
+    valor_pedidos_concluidos = (
+        Pedido.objects.filter(status="Concluído").aggregate(
+            total=Sum("itempedido__preco")
+        )["total"]
+        or 0
+    )
+    valor_pedidos_pendentes = (
+        Pedido.objects.filter(status="Pendente").aggregate(
+            total=Sum("itempedido__preco")
+        )["total"]
+        or 0
+    )
+    total_pedidos_mes_atual = Pedido.objects.filter(
+        data_pedido__month=timezone.now().month
+    ).count()
+
+    return render(
+        request,
+        "estatisticas.html",
+        {
+            "valor_pedidos_concluidos": valor_pedidos_concluidos,
+            "valor_pedidos_pendentes": valor_pedidos_pendentes,
+            "total_pedidos_mes_atual": total_pedidos_mes_atual,
+        },
+    )

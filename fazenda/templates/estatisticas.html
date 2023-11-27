@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block title %}Estatísticas{% endblock %}
+{% block content %}
+    <h1>Estatísticas</h1>
+    
+    <p>Valor total em pedidos concluídos: R$ {{ valor_pedidos_concluidos }}</p>
+    <p>Valor total em pedidos pendentes: R$ {{ valor_pedidos_pendentes }}</p>
+    <p>Total de pedidos no mês atual: {{ total_pedidos_mes_atual }}</p>
+    <!-- Adicione outras estatísticas conforme desejado -->
+{% endblock %}

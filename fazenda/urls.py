@@ -53,4 +53,5 @@ urlpatterns = [
         views.alternar_checkbox_item_pedido,
         name="alternar_checkbox_item_pedido",
     ),
+    path('estatisticas/', views.estatisticas, name='estatisticas')
 ]
