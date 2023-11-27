@@ -1,14 +1,12 @@
 {% extends 'base.html' %}
 {% block title %}Deletar Produto{% endblock %}
 {% block content %}
-<div>
-    <h4
-    class="alert alert-danger"
-  >Tem certeza que deseja deletar o produto "{{ produto.nome }}"?</h4>
-    <form method="post">
-        {% csrf_token %}
-        <button type="submit" class="btn btn-danger">Deletar Produto</button>
-    </form>
-    <a class="btn btn-warning mt-3" href="{% url 'listar_produtos' %}">Voltar</a>
-</div>
+    <div class="container w-75">
+        <h4 class="alert alert-danger">Tem certeza que deseja deletar o produto "{{ produto.nome }}"?</h4>
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Deletar Produto</button>
+            <a class="btn btn-warning" href="{% url 'listar_produtos' %}">Voltar</a>
+        </form>
+    </div>
 {% endblock %}

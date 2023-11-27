@@ -2,15 +2,16 @@
 {% load static %}
 {% block title %}Atualizar Cliente{% endblock %}
 {% block content %}
-<div>
-    <h1>Atualizar Cliente</h1>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button
-        class="btn btn-primary"
-      type="submit">Atualizar</button>
-    </form>
-        <a class="btn btn-warning mt-3 " href="{% url 'listar_clientes' %}">Voltar</a>
-</div>
+    <div>
+        <h1>
+            <i class="bi bi-person-arms-up"></i>
+            Atualizar Cliente
+        </h1>
+        <form method="post" class="form-group">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button class="btn btn-success" type="submit">Atualizar</button>
+            <a class="btn btn-warning" href="{% url 'listar_clientes' %}">Voltar</a>
+        </form>
+    </div>
 {% endblock %}

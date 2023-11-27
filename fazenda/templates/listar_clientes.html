@@ -3,13 +3,17 @@
 {% block title %}Listagem de Clientes{% endblock %}
 {% block content %}
     <div class="container-fluid d-flex flex-column justify-content-center align-items-center">
-        <h1 class=""> <i class="bi bi-person-arms-up"></i> Lista de Clientes </h1>
+        <h1 class="">
+            <i class="bi bi-person-arms-up"></i> Lista de Clientes
+        </h1>
+        <a class="btn btn-success btn-lg btn-block mb-4 mt-3"
+           href="{% url 'criar_cliente' %}">Novo Cliente</a>
         <ul class="h5 list-group list-group-flush w-75 d-flex flex-column justify-content-center align-items-center">
             {% for cliente in clientes %}
                 <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center list">
                     <!-- {{ cliente.nome }} - {{ cliente.empresa }} - {{ cliente.telefone }} -->
                     <div class="d-flex flex-column">
-                        <span class="fs-4 text-primary"><b>Nome: </b> {{ cliente.nome }}</span>
+                        <span class="fs-4 text-success"><b>Nome: </b> {{ cliente.nome }}</span>
                         <span class="text-secondary"><b>Empresa: </b> {{ cliente.empresa }}</span>
                         <span class="text-secondary"><b>Telefone: </b> {{ cliente.telefone }}</span>
                     </div>
@@ -20,7 +24,5 @@
                 </li>
             {% endfor %}
         </ul>
-        <a class="btn btn-primary btn-lg btn-block"
-           href="{% url 'criar_cliente' %}">Novo Cliente</a>
     </div>
 {% endblock %}

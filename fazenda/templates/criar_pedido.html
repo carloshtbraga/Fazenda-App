@@ -1,13 +1,16 @@
 {% extends 'base.html' %}
 {% block title %}Criar Pedido{% endblock %}
-
 {% block content %}
-<div>
-    <h1>Criar Pedido</h1>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Criar Pedido</button>
-    </form>
-</div>
+    <div>
+        <h1 class="mb-4">
+            <i class="bi bi-box-seam-fill"></i>
+            Criar Pedido
+        </h1>
+        <form method="post" class="form-group">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-success">Criar Pedido</button>
+            <a href="{% url 'listar_pedidos' %}" class="btn btn-warning">Voltar</a>
+        </form>
+    </div>
 {% endblock %}

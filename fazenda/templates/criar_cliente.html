@@ -7,7 +7,7 @@
         <form method="post" class="form-group">
             {% csrf_token %}
             {{ form.as_p }}
-            <button type="submit" class="btn btn-primary">Salvar</button>
+            <button type="submit" class="btn btn-success">Salvar</button>
         </form>
         <a class="btn btn-warning mt-3 " href="{% url 'listar_clientes' %}">Voltar</a>
     </div>

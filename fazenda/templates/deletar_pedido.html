@@ -1,12 +1,12 @@
 {% extends 'base.html' %}
 {% block title %}Deletar Pedido{% endblock %}
 {% block content %}
-    <div>
+    <div class="container w-75">
         <h4 class="alert alert-danger">Você tem certeza que deseja deletar o pedido de {{ pedido.cliente.nome }}?</h4>
         <form action="{% url 'deletar_pedido' pedido.pk %}" method="post">
             {% csrf_token %}
             <button type="submit" class="btn btn-danger">Confirmar Deleção</button>
+            <a class="btn btn-warning " href="{% url 'listar_pedidos' %}">Cancelar</a>
         </form>
-        <a class="btn btn-warning" href="{% url 'listar_pedidos' %}">Cancelar</a>
     </div>
 {% endblock %}

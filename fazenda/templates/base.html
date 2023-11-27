@@ -24,7 +24,6 @@
     .header {
       height: 80px;
       padding: 0 20px;
-      background-color: green;
       font-size: 1.2rem;
       justify-content: center;
       align-items: center;
@@ -41,25 +40,25 @@
       width: 200%;
       color: green;
     }
+
     .ico {
       margin-left: 1rem;
     }
 
-    .centro{
+    .centro {
 
-align-items: center;
-align-content: center;
-align-self: center;
+      align-items: center;
+      align-content: center;
+      align-self: center;
     }
-
   </style>
 </head>
 
 <body class="d-flex flex-column align-items-center d-sm bg-light text-dark">
-  <header class="nav mb-5 w-100 header ">
+  <header class="nav mb-5 w-100 header bg-success">
     <a class="nav-link text-light" href="{% url 'listar_clientes' %}">Clientes <i class="bi bi-person-arms-up"></i></a>
     <a class="nav-link text-light" href="{% url 'listar_produtos' %}">Produtos <i class="bi bi-apple"></i></a>
-    <a class="nav-link text-light" href="{% url 'listar_pedidos' %}">Pedidos <i class="bi bi-box-seam"></i></a>
+    <a class="nav-link text-light" href="{% url 'listar_pedidos' %}">Pedidos <i class="bi bi-box-seam-fill"></i></a>
   </header>
   {% block content %}{% endblock %}
 </body>

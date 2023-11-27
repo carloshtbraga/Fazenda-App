@@ -2,13 +2,16 @@
 {% load static %}
 {% block title %}Cadastrar Novo Produto{% endblock %}
 {% block content %}
-<div>
-  <h1>Cadastrar Novo Produto</h1>
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="btn btn-primary">Salvar</button>
-  </form>
-  <a href="{% url 'listar_produtos' %}" class="btn btn-warning">Voltar para a listagem</a>
-</div>
+    <div>
+        <h1>
+            <i class="bi bi-apple"> </i>
+            Cadastrar Novo Produto
+        </h1>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-success">Salvar</button>
+            <a href="{% url 'listar_produtos' %}" class="btn btn-warning">Voltar</a>
+        </form>
+    </div>
 {% endblock %}

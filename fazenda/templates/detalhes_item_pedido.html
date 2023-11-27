@@ -10,7 +10,7 @@
         <span class="text-secondary">Status: {{ pedido.status }}</span>
 
         {% if pedido.status != 'Concluído' %}
-            <a href="{% url 'adicionar_item_pedido' pedido.id %}" class="btn btn-primary mb-3 mt-3">Adicionar Item</a>
+            <a href="{% url 'adicionar_item_pedido' pedido.id %}" class="btn btn-success mb-3 mt-3">Adicionar Item</a>
         {% endif %}
         <ul class="h5 list-group list-group-flush w-75 d-flex flex-column justify-content-center align-items-center">
             {% for item_pedido in pedido.itempedido_set.all %}
