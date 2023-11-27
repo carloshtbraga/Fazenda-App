@@ -17,10 +17,11 @@
         <ul class=" h5 list-group list-group-flush w-75 d-flex flex-column justify-content-center align-items-center">
             {% for produto in produtos %}
                 <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center list">
-                    <!-- {{ produto.nome }} - Tempo de Preparo: {{ produto.tempo_preparo }} dias -->
                     <div class="d-flex flex-column">
                         <span class="fs-4 text-success">{{ produto.nome }}</span>
                         <span class="text-secondary"><b>Tempo de Entrega:</b> {{ produto.tempo_preparo }} dias</span>
+                        <!-- Mostrar o total deste produto -->
+                        <span class="text-secondary"><b>Total Vendido:</b> {{ produto.total_produto }}</span>
                     </div>
                     <div class="d-flex justify-content-between align-items-center btns h3">
                         <a href="{% url 'atualizar_produto' produto.pk %}"><i class="bi bi-pencil-square text-success"></i></a>

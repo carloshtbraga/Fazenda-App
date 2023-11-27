@@ -62,18 +62,22 @@ def deletar_cliente(request, pk):
 
 
 def listar_produtos(request):
-    termo_pesquisa = request.GET.get("q")  # Obtém o termo de pesquisa, se presente
+    termo_pesquisa = request.GET.get("q")
+
     if termo_pesquisa:
         produtos = Produto.objects.filter(nome__icontains=termo_pesquisa)
     else:
         produtos = Produto.objects.all()
 
-    total_produtos = produtos.count()  # Obtém o total de produtos
+    # Obtendo o total de cada produto usando annotate e Sum
+    produtos_com_total = produtos.annotate(total_produto=Sum("itempedido__quantidade"))
+
+    total_produtos = produtos_com_total.count()  # Obtém o total de produtos
 
     return render(
         request,
         "listar_produtos.html",
-        {"produtos": produtos, "total_produtos": total_produtos},
+        {"produtos": produtos_com_total, "total_produtos": total_produtos},
     )
 
 
