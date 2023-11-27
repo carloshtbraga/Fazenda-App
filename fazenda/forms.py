@@ -46,3 +46,7 @@ class ItemPedidoForm(ModelForm):
             "quantidade": forms.NumberInput(attrs={"class": "form-control"}),
             "preco": forms.NumberInput(attrs={"class": "form-control"}),
         }
+
+    def __init__(self, *args, **kwargs):
+        super(ItemPedidoForm, self).__init__(*args, **kwargs)
+        self.fields["produto"].empty_label = "Selecione o Produto"

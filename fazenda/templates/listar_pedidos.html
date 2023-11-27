@@ -3,7 +3,7 @@
 {% block title %}Listagem de Pedidos{% endblock %}
 {% block content %}
     <div class="container-fluid d-flex flex-column justify-content-center align-items-center pedidos">
-        <h1 class="mb-3">
+        <h1 class="mb-2">
     <i class="bi bi-box-seam-fill text-success"></i> 
     Lista de Pedidos
         </h2>
@@ -11,7 +11,7 @@
 
 
         <form method="GET" class="tex d-flex flex-column justify-content-center">
-            <input class="form-control" type="text" name="q" placeholder="Pesquisar por nome ou empresa" />
+            <input class="form-control" type="text" name="q" placeholder="Nome do cliente, empresa ou id" />
             <button class="btn btn-success mb-3 mt-2 " type="submit">Pesquisar</button>
         </form>
 

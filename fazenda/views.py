@@ -1,5 +1,5 @@
 from django.shortcuts import redirect, render, get_object_or_404
-from django.db.models import Sum, F, Q
+from django.db.models import Sum, F, Q, Count
 from .forms import ClienteForm, PedidoForm, ProdutoForm, ItemPedidoForm
 from .models import Cliente, Pedido, Produto, ItemPedido
 
@@ -10,7 +10,8 @@ def index(request):
 
 
 def listar_clientes(request):
-    termo_pesquisa = request.GET.get("q")  # Obtém o termo de pesquisa, se presente
+    termo_pesquisa = request.GET.get("q")
+
     if termo_pesquisa:
         clientes = Cliente.objects.filter(
             Q(nome__icontains=termo_pesquisa) | Q(empresa__icontains=termo_pesquisa)
@@ -18,12 +19,11 @@ def listar_clientes(request):
     else:
         clientes = Cliente.objects.all()
 
-    total_clientes = clientes.count()  # Obtém o total de clientes
+    # Obtém o total de pedidos de cada cliente
+    clientes_com_total_pedidos = clientes.annotate(total_pedidos=Count("pedido"))
 
     return render(
-        request,
-        "listar_clientes.html",
-        {"clientes": clientes, "total_clientes": total_clientes},
+        request, "listar_clientes.html", {"clientes": clientes_com_total_pedidos}
     )
 
 
@@ -118,6 +118,9 @@ def listar_pedidos(request):
         pedidos = pedidos.filter(
             Q(cliente__nome__icontains=termo_pesquisa)
             | Q(cliente__empresa__icontains=termo_pesquisa)
+            | Q(
+                pk__icontains=termo_pesquisa
+            )  # Procurar pelo ID do pedido (chave primária)
         )
 
     return render(request, "listar_pedidos.html", {"pedidos": pedidos})

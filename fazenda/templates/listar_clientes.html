@@ -26,6 +26,7 @@
                         <span class="fs-4 text-success"><b>Nome: </b> {{ cliente.nome }}</span>
                         <span class="text-secondary"><b>Empresa: </b> {{ cliente.empresa }}</span>
                         <span class="text-secondary"><b>Telefone: </b> {{ cliente.telefone }}</span>
+                        <span class="text-secondary"><b>Pedidos: </b> {{ cliente.total_pedidos }}</span>
                     </div>
                     <div class="d-flex justify-content-between align-items-center btns h3">
                         <a href="{% url 'atualizar_cliente' cliente.pk %}"><i class="bi bi-pencil-square text-success"></i></a>
