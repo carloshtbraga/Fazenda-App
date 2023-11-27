@@ -22,6 +22,8 @@
         </form>
         <hr>
         <h2>Pedidos</h2>
+        A entrega é calculada a partir da data de criação do pedido + o tempo de entrega do produto mais demorado dentro do pedido.
+        <br>  <br>
         <ul class="h5 list-group list-group-flush w-75 d-flex flex-column justify-content-center align-items-center">
             {% for pedido in pedidos %}
                 <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center list"
@@ -29,9 +31,11 @@
                     <!-- <h5 class=""> -->
                     <!-- Pedido {{ pedido.pk }} - {{ pedido.cliente.nome }} - {{ pedido.data_pedido }} -->
                     <div class="d-flex flex-column">
-                        <span class="fw-bold fs-4 text-primary">Pedido {{ pedido.pk }}</span>
-                        <span class="text-secondary">{{ pedido.cliente.nome }}</span>
-                        <span class="text-secondary">{{ pedido.data_pedido }}</span>
+                        <span class="fs-4 text-primary">Pedido {{ pedido.pk }}</span>
+                        <span class="text-secondary"><b>Empresa:</b> {{ pedido.cliente.empresa }}</span>
+                        <span class="text-secondary"><b>Nome cliente:</b>  {{ pedido.cliente.nome }}</span>
+                        <span class="text-secondary"><b>Criado:</b>  {{ pedido.data_pedido|date:"d/m/Y" }}</span>
+                        <span class="text-secondary"><b>Entrega:</b>  {{ pedido.data_entrega|date:"d/m/Y" }}</span>
                     </div>
                     {% if pedido.status == 'Concluído' %}
                         <i class="bi bi-check-circle text-success fs-1"></i>

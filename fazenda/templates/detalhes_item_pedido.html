@@ -3,22 +3,35 @@
 {% block content %}
     {% load static %}
     <div class="container-fluid d-flex flex-column justify-content-center align-items-center">
-        <h3>Pedido de {{ pedido.cliente.nome }} em {{ pedido.data_pedido }} Status : {{ pedido.status }}</h3>
-        <a href="{% url 'adicionar_item_pedido' pedido.id %}"
-           class="btn btn-primary mb-3 mt-3 ">Adicionar Item</a>
+        <h3>Pedido #{{ pedido.id }}</h3>
+        Pedido de {{ pedido.cliente.nome }} - {{ pedido.cliente.empresa }}
+        <span class="text-secondary">Criado: {{ pedido.data_pedido|date:"d/m/Y" }}</span>
+        <span class="text-secondary">Entrega: {{ pedido.data_entrega|date:"d/m/Y" }}</span>
+        <span class="text-secondary">Status: {{ pedido.status }}</span>
+
+        {% if pedido.status != 'Concluído' %}
+            <a href="{% url 'adicionar_item_pedido' pedido.id %}" class="btn btn-primary mb-3 mt-3">Adicionar Item</a>
+        {% endif %}
         <ul class="h5 list-group list-group-flush w-75 d-flex flex-column justify-content-center align-items-center">
             {% for item_pedido in pedido.itempedido_set.all %}
                 <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center list">
                     Produto: {{ item_pedido.produto.nome }} - Quantidade: {{ item_pedido.quantidade }} - Preço: {{ item_pedido.preco }}
+                    {% if item_pedido.data_entrega_produto %}
+                        <span class="text-secondary">Entrega estimada: {{ item_pedido.data_entrega_produto|date:"d/m/Y" }}</span>
+                    {% else %}
+                        <span class="text-secondary">Entrega estimada indisponível</span>
+                    {% endif %}
                 </li>
             {% endfor %}
         </ul>
         <hr>
-        <p>
-            <strong>Total do Pedido: R$ {{ pedido.total_pedido }}</strong>
-        </p>
+        <p><strong>Total do Pedido: R$ {{ pedido.total_pedido }}</strong></p>
         <div class="d-flex justify-content-between align-items-center w-75">
-            <a href="{% url 'concluir_pedido' pedido.id %}" class="btn btn-success">Concluir Pedido</a>
+            {% if pedido.status == 'Concluído' %}
+                <a href="{% url 'concluir_pedido' pedido.id %}" class="btn btn-warning">Desfazer</a>
+            {% else %}
+                <a href="{% url 'concluir_pedido' pedido.id %}" class="btn btn-success">Concluir</a>
+            {% endif %}
             <a href="{% url 'deletar_pedido' pedido.id %}" class="btn btn-danger">Deletar Pedido</a>
         </div>
     </div>

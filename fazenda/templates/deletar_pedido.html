@@ -7,6 +7,6 @@
             {% csrf_token %}
             <button type="submit" class="btn btn-danger">Confirmar Deleção</button>
         </form>
-        <a href="{% url 'listar_pedidos' %}">Cancelar e voltar para a listagem</a>
+        <a class="btn btn-warning" href="{% url 'listar_pedidos' %}">Cancelar</a>
     </div>
 {% endblock %}

@@ -43,4 +43,9 @@ urlpatterns = [
         views.detalhes_item_pedido,
         name="detalhes_item_pedido",
     ),
+    path(
+        "alternar-checkbox/<int:item_pedido_id>/",
+        views.alternar_checkbox_item_pedido,
+        name="alternar_checkbox_item_pedido",
+    ),
 ]

@@ -147,6 +147,16 @@ def adicionar_item_pedido(request, pedido_id):
 
 def marcar_pedido_como_concluido(request, pedido_id):
     pedido = get_object_or_404(Pedido, pk=pedido_id)
-    pedido.status = "Concluído"
+    if pedido.status == "Pendente":
+        pedido.status = "Concluído"
+    else:
+        pedido.status = "Pendente"
     pedido.save()
     return redirect("detalhes_item_pedido", pk=pedido_id)
+
+
+def alternar_checkbox_item_pedido(request, item_pedido_id):
+    item_pedido = get_object_or_404(ItemPedido, pk=item_pedido_id)
+    item_pedido.marcado = not item_pedido.marcado
+    item_pedido.save()
+    return print("foi")
