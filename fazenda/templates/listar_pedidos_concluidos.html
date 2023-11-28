@@ -47,4 +47,33 @@
             </a>
         </ul>
     </div>
+ <!-- Adicione isso no final do seu arquivo de template -->
+<div class="pagination justify-content-center mt-4">
+    <ul class="pagination">
+        {% if pedidos.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?page=1">&laquo; Primeira</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="?page={{ pedidos.previous_page_number }}">Anterior</a>
+            </li>
+        {% endif %}
+
+        <li class="page-item disabled">
+            <span class="page-link">
+                Página {{ pedidos.number }} de {{ pedidos.paginator.num_pages }}.
+            </span>
+        </li>
+
+        {% if pedidos.has_next %}
+            <li class="page-item">
+                <a class="page-link text-success" href="?page={{ pedidos.next_page_number }}">Próxima</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link text-success" href="?page={{ pedidos.paginator.num_pages }}">Última &raquo;</a>
+            </li>
+        {% endif %}
+    </ul>
+</div>
+
 {% endblock %}

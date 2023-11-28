@@ -4,6 +4,7 @@ from .forms import ClienteForm, PedidoForm, ProdutoForm, ItemPedidoForm
 from .models import Cliente, Pedido, Produto, ItemPedido
 from django.utils import timezone
 from datetime import datetime
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 # Create your views here.
@@ -21,11 +22,20 @@ def listar_clientes(request):
     else:
         clientes = Cliente.objects.all()
 
-    # Obtém o total de pedidos de cada cliente
-    clientes_com_total_pedidos = clientes.annotate(total_pedidos=Count("pedido"))
+    paginator = Paginator(clientes, 5)  # Define 5 itens por página
+    page_number = request.GET.get("page")
+
+    try:
+        clientes_paginados = paginator.page(page_number)
+    except PageNotAnInteger:
+        clientes_paginados = paginator.page(1)
+    except EmptyPage:
+        clientes_paginados = paginator.page(paginator.num_pages)
 
     return render(
-        request, "listar_clientes.html", {"clientes": clientes_com_total_pedidos}
+        request,
+        "listar_clientes.html",
+        {"clientes": clientes_paginados},
     )
 
 
@@ -64,21 +74,29 @@ def deletar_cliente(request, pk):
 
 def listar_produtos(request):
     termo_pesquisa = request.GET.get("q")
+    produtos = Produto.objects.all()
 
     if termo_pesquisa:
-        produtos = Produto.objects.filter(nome__icontains=termo_pesquisa)
-    else:
-        produtos = Produto.objects.all()
+        produtos = produtos.filter(nome__icontains=termo_pesquisa)
 
-    # Obtendo o total de cada produto usando annotate e Sum
     produtos_com_total = produtos.annotate(total_produto=Sum("itempedido__quantidade"))
 
-    total_produtos = produtos_com_total.count()  # Obtém o total de produtos
+    paginator = Paginator(produtos_com_total, 5)  # Define 5 itens por página
+    page_number = request.GET.get("page")
+
+    try:
+        produtos_paginados = paginator.page(page_number)
+    except PageNotAnInteger:
+        produtos_paginados = paginator.page(1)
+    except EmptyPage:
+        produtos_paginados = paginator.page(paginator.num_pages)
+
+    total_produtos = produtos_com_total.count()
 
     return render(
         request,
         "listar_produtos.html",
-        {"produtos": produtos_com_total, "total_produtos": total_produtos},
+        {"produtos": produtos_paginados, "total_produtos": total_produtos},
     )
 
 
@@ -141,12 +159,24 @@ def listar_pedidos_concluidos(request):
         pedidos = pedidos.filter(
             Q(cliente__nome__icontains=termo_pesquisa)
             | Q(cliente__empresa__icontains=termo_pesquisa)
-            | Q(
-                pk__icontains=termo_pesquisa
-            )  # Procurar pelo ID do pedido (chave primária)
+            | Q(pk__icontains=termo_pesquisa)
         )
 
-    return render(request, "listar_pedidos_concluidos.html", {"pedidos": pedidos})
+    paginator = Paginator(pedidos, 5)  # Define 5 itens por página
+    page_number = request.GET.get("page")
+
+    try:
+        pedidos_paginados = paginator.page(page_number)
+    except PageNotAnInteger:
+        pedidos_paginados = paginator.page(1)
+    except EmptyPage:
+        pedidos_paginados = paginator.page(paginator.num_pages)
+
+    return render(
+        request,
+        "listar_pedidos_concluidos.html",
+        {"pedidos": pedidos_paginados},
+    )
 
 
 def criar_pedido(request):

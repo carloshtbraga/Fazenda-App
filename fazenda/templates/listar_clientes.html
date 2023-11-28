@@ -7,17 +7,15 @@
             <i class="bi bi-person-arms-up text-success"></i> Lista de Clientes
         </h1>
         <form method="GET" action="{% url 'listar_clientes' %}" class="tex d-flex flex-column justify-content-center">
-            <input class="form-control"type="text" name="q" placeholder ="Pesquisar por nome ou empresa" />
+            <input class="form-control" type="text" name="q" placeholder="Pesquisar por nome ou empresa" />
             <button type="submit" class="btn btn-success mt-2 mb-3">Pesquisar</button>
         </form>
         
         <!-- Exibir o total de clientes -->
-
         <h5 class="text-center text-lg fs-3">
-            Total de Clientes: <span class="text-success">{{ clientes|length }}</span>
+            Total de Clientes: <span class="text-success">{{ clientes.paginator.count }}</span>
         </h5>
-        <a class="btn btn-success btn-lg btn-block mb-4"
-           href="{% url 'criar_cliente' %}">Novo Cliente</a>
+        <a class="btn btn-success btn-lg btn-block mb-4" href="{% url 'criar_cliente' %}">Novo Cliente</a>
         <ul class="h5 list-group list-group-flush w-75 d-flex flex-column justify-content-center align-items-center">
             {% for cliente in clientes %}
                 <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center list">
@@ -34,6 +32,34 @@
                     </div>
                 </li>
             {% endfor %}
+        </ul>
+    </div>
+
+    <div class="pagination justify-content-center mt-4">
+        <ul class="pagination">
+            {% if clientes.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page=1">&laquo; Primeira</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ clientes.previous_page_number }}">Anterior</a>
+                </li>
+            {% endif %}
+    
+            <li class="page-item disabled">
+                <span class="page-link">
+                    Página {{ clientes.number }} de {{ clientes.paginator.num_pages }}.
+                </span>
+            </li>
+    
+            {% if clientes.has_next %}
+                <li class="page-item">
+                    <a class="page-link text-success" href="?page={{ clientes.next_page_number }}">Próxima</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link text-success" href="?page={{ clientes.paginator.num_pages }}">Última &raquo;</a>
+                </li>
+            {% endif %}
         </ul>
     </div>
 {% endblock %}
