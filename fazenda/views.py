@@ -18,9 +18,13 @@ def listar_clientes(request):
     if termo_pesquisa:
         clientes = Cliente.objects.filter(
             Q(nome__icontains=termo_pesquisa) | Q(empresa__icontains=termo_pesquisa)
-        )
+        ).order_by(
+            "nome"
+        )  # Ordena por nome (ou qualquer campo desejado)
     else:
-        clientes = Cliente.objects.all()
+        clientes = Cliente.objects.all().order_by(
+            "nome"
+        )  # Ordena por nome (ou qualquer campo desejado)
 
     paginator = Paginator(clientes, 5)  # Define 5 itens por página
     page_number = request.GET.get("page")
@@ -79,7 +83,9 @@ def listar_produtos(request):
     if termo_pesquisa:
         produtos = produtos.filter(nome__icontains=termo_pesquisa)
 
-    produtos_com_total = produtos.annotate(total_produto=Sum("itempedido__quantidade"))
+    produtos_com_total = produtos.annotate(
+        total_produto=Sum("itempedido__quantidade")
+    ).order_by("nome")
 
     paginator = Paginator(produtos_com_total, 5)  # Define 5 itens por página
     page_number = request.GET.get("page")
@@ -153,7 +159,7 @@ def listar_pedidos(request):
 def listar_pedidos_concluidos(request):
     termo_pesquisa = request.GET.get("q")
 
-    pedidos = Pedido.objects.filter(status="Concluído")
+    pedidos = Pedido.objects.filter(status="Concluído").order_by("pk")
 
     if termo_pesquisa:
         pedidos = pedidos.filter(
