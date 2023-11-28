@@ -1,8 +1,9 @@
 from django.shortcuts import redirect, render, get_object_or_404
-from django.db.models import Sum, F, Q, Count
+from django.db.models import Sum, F, Q, Count, ExpressionWrapper, DecimalField
 from .forms import ClienteForm, PedidoForm, ProdutoForm, ItemPedidoForm
 from .models import Cliente, Pedido, Produto, ItemPedido
 from django.utils import timezone
+from datetime import datetime
 
 
 # Create your views here.
@@ -140,6 +141,9 @@ def listar_pedidos_concluidos(request):
         pedidos = pedidos.filter(
             Q(cliente__nome__icontains=termo_pesquisa)
             | Q(cliente__empresa__icontains=termo_pesquisa)
+            | Q(
+                pk__icontains=termo_pesquisa
+            )  # Procurar pelo ID do pedido (chave primária)
         )
 
     return render(request, "listar_pedidos_concluidos.html", {"pedidos": pedidos})
@@ -214,21 +218,45 @@ def alternar_checkbox_item_pedido(request, item_pedido_id):
 
 
 def estatisticas(request):
-    valor_pedidos_concluidos = (
-        Pedido.objects.filter(status="Concluído").aggregate(
-            total=Sum("itempedido__preco")
-        )["total"]
-        or 0
-    )
-    valor_pedidos_pendentes = (
-        Pedido.objects.filter(status="Pendente").aggregate(
-            total=Sum("itempedido__preco")
-        )["total"]
-        or 0
-    )
-    total_pedidos_mes_atual = Pedido.objects.filter(
-        data_pedido__month=timezone.now().month
-    ).count()
+    data_inicio = request.GET.get("data_inicio")
+    data_fim = request.GET.get("data_fim")
+
+    pedidos_pendentes = Pedido.objects.filter(status="Pendente")
+
+    valor_pedidos_pendentes = 0
+
+    for pedido in pedidos_pendentes:
+        itens_pedido = pedido.itempedido_set.all()
+        valor_pedido = sum(item.quantidade * item.preco for item in itens_pedido)
+        valor_pedidos_pendentes += valor_pedido
+
+    valor_pedidos_concluidos = 0
+    total_pedidos_mes_atual = 0
+    pedidos_no_periodo = []
+
+    if data_inicio and data_fim:
+        data_inicio = datetime.strptime(data_inicio, "%Y-%m-%d").date()
+        data_fim = datetime.strptime(data_fim, "%Y-%m-%d").date()
+
+        pedidos_concluidos = Pedido.objects.filter(
+            status="Concluído", data_pedido__range=(data_inicio, data_fim)
+        )
+
+        valor_pedidos_concluidos = (
+            pedidos_concluidos.aggregate(
+                total=ExpressionWrapper(
+                    Sum(F("itempedido__quantidade") * F("itempedido__preco")),
+                    output_field=DecimalField(),
+                )
+            )["total"]
+            or 0
+        )
+
+        total_pedidos_mes_atual = pedidos_concluidos.count()
+
+        pedidos_no_periodo = pedidos_concluidos.values_list(
+            "id", "cliente__nome", "cliente__empresa"
+        )
 
     return render(
         request,
@@ -237,5 +265,6 @@ def estatisticas(request):
             "valor_pedidos_concluidos": valor_pedidos_concluidos,
             "valor_pedidos_pendentes": valor_pedidos_pendentes,
             "total_pedidos_mes_atual": total_pedidos_mes_atual,
+            "pedidos_no_periodo": pedidos_no_periodo,
         },
     )

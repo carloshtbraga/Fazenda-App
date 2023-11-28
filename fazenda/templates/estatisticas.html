@@ -1,10 +1,42 @@
 {% extends 'base.html' %}
+
 {% block title %}Estatísticas{% endblock %}
+
 {% block content %}
-    <h1>Estatísticas</h1>
-    
-    <p>Valor total em pedidos concluídos: R$ {{ valor_pedidos_concluidos }}</p>
-    <p>Valor total em pedidos pendentes: R$ {{ valor_pedidos_pendentes }}</p>
-    <p>Total de pedidos no mês atual: {{ total_pedidos_mes_atual }}</p>
-    <!-- Adicione outras estatísticas conforme desejado -->
+<div class="text-center">
+    <h5>
+        <b>Valor total dos pedidos em andamento:</b> <span class="text-success">R$ {{ valor_pedidos_pendentes }}</span>
+    </h5>
+</div>
+    <hr />
+    <h5>Pedidos Concluídos</h5>
+    <form method="GET" action="{% url 'estatisticas' %}" class="tex d-flex flex-column justify-content-center">
+        <label for="data_inicio">Data de início:</label>
+        <input type="date" id="data_inicio" name="data_inicio" class="form-control" />
+
+        <label for="data_fim">Data de término:</label>
+        <input type="date" id="data_fim" name="data_fim" class="form-control" />
+
+        <button type="submit" class="btn btn-success mt-2 mb-2">Filtrar</button>
+    </form>
+    <h5>Dados referentes ao período filtrado</h5>
+    <p>
+        Valor total dos pedidos:
+        <span class="text-success">R$ {{ valor_pedidos_concluidos }}</span>
+    </p>
+    <p>Total de pedidos: <span class="text-success">{{ total_pedidos_mes_atual }}</span></p>
+    <h5>Detalhes dos Pedidos no Período</h5>
+    <ul class="h5 list-group list-group-flush w-75 d-flex flex-column justify-content-center align-items-center">
+        {% for pedido_id, cliente_nome, cliente_empresa in pedidos_no_periodo %}
+        <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center list" href="{% url 'detalhes_item_pedido' pedido_id %}">
+            <div class="d-flex flex-column">
+                <span class="fs-4 text-success">Pedido {{ pedido_id }}</span>
+                <span class="text-secondary"><b>Empresa:</b> {{ cliente_empresa }}</span>
+                <span class="text-secondary"><b>Nome cliente:</b> {{ cliente_nome }}</span>
+            </div>
+        </a>
+        {% empty %}
+        <li>Nenhum pedido concluído encontrado no período selecionado.</li>
+        {% endfor %}
+    </ul>
 {% endblock %}
